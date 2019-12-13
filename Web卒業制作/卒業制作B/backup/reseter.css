@@ -1,0 +1,128 @@
+@charset "utf-8";
+
+/* リセッター */
+/* 
+html5doctor.com Reset Stylesheetv1.6.1 Last Updated: 2010-09-17 Author: Richard Clark - http://richclarkdesign.com 
+Twitter: @rich_clark
+*/
+
+html, body, div, span, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,abbr, address, cite, code,del, dfn, em, img, ins, kbd, q, samp,small, strong, sub, sup, var,b, i,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary,time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+body {line-height:1;}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
+    display:block;}
+nav ul {list-style:none;}
+blockquote, q {quotes:none;}
+blockquote:before, blockquote:after,q:before, q:after {
+    content:''; content:none;}
+a {
+    margin:0;
+    padding:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+    color :#000;
+    text-decoration: none;
+}
+ins {
+    background-color:#ff9;
+    color:#000;
+    text-decoration:none;
+}
+mark {
+    background-color:#ff9;
+    color:#000; 
+    font-style:italic;
+    font-weight:bold;
+}
+del {text-decoration: line-through;}
+abbr[title], dfn[title] {
+    border-bottom:1px dotted;
+    cursor:help;
+}
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+input, select {vertical-align:middle;}
+
+ol, ul { list-style-position: inside; }
+
+/* リセッターここまで*/
+
+
+/*index.html*/
+
+#index_body{
+	background-color :#000000;
+	text-align: center;
+	
+}
+
+#index_wrapper{
+
+}
+
+#index_background1{
+	margin-left:auto;
+	margin-right:auto;
+
+	height :960px;
+	background-image:url("../images/top_bk1.jpg");
+ 	background-repeat: no-repeat;
+	background-position: top center;
+}
+
+#index_background2{
+	top:960px;
+	height:1291px;
+	background-size:auto,cover;
+	margin-left:auto;
+	margin-right:auto;
+	background-image:
+					 url("../images/top_bk2_tree.png"),url("../images/top_bk2.png");
+/*	background-image:url("../images/top_bk2.png");*/
+ 	background-repeat: no-repeat , no-repeat;
+	background-position:center , bottom center;
+}
+
+/*#index_background2_1{
+	height:500px;
+	background-size:cover;
+	background-image:url("../images/top_bk2_01.png");
+ 	background-repeat: no-repeat;
+	background-position:center;
+}
+
+#index_background2_2{
+	height:266px;
+	background-size:cover;
+	background-image:url("../images/top_bk2_02.png");
+ 	background-repeat: no-repeat;
+	background-position:center;
+}
+
+#index_background2_3{
+	height:131px;
+	background-size:cover;
+	background-image:url("../images/top_bk2_03.png");
+ 	background-repeat: no-repeat;
+	background-position:center;
+}
+
+#index_background2{
+	height:897px;
+	background-size:contain;
+	margin-left:auto;
+	margin-right:auto;
+	background-image:url("../images/top_bk2_tree.png");
+ 	background-repeat: no-repeat;
+	background-position:bottom center;
+}*/
