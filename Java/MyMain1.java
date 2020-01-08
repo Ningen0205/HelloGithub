@@ -72,8 +72,9 @@ public class MyMain1 /*implements Runnable*/{
 		WINDOW_WIDTH = MyFrame1.WINDOW_WIDTH;
 		WINDOW_HEIGHT = MyFrame1.WINDOW_HEIGHT;
 		JTextField name = new JTextField();
-		charImage = Toolkit.getDefaultToolkit().getImage("./pipo-xmaschara01.png");
-		mapImage = Toolkit.getDefaultToolkit().getImage("./WorldMap-A2.png");//マップのマップチップ
+		charImage = Toolkit.getDefaultToolkit().getImage("Java/Images/pipo-xmaschara01.png");
+//	charImage = Toolkit.getDefaultToolkit().getImage(Java\Images\pipo-xmaschara01.png)
+		mapImage = Toolkit.getDefaultToolkit().getImage("Java/Images/WorldMap-A2.png");//マップのマップチップ
 		draw = new Draw();
 		g = myFrame1.panel.image.getGraphics();	//パネル
 //		g = myFrame1.comp.getGraphics();	//パネル
@@ -126,6 +127,10 @@ public class MyMain1 /*implements Runnable*/{
 				if(MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)){
 					status = Status.BATTLE;
 				}
+
+				if(MyKeyboard1.isKeyPressed(KeyEvent.VK_SHIFT)){
+					status = Status.MENU;
+				}
 				//どのキーを押したかのチェック
                 if(MyKeyboard1.isKeyPressed(KeyEvent.VK_LEFT)) {
                 	if(character.getDirection() == Character.LEFT) {
@@ -161,6 +166,19 @@ public class MyMain1 /*implements Runnable*/{
                 }
                 draw.drawChar(character.getPositionX(),character.getPositionY());
 				break;
+			case MENU:
+				draw.drawLayer();
+				draw.drawChar(character.getPositionX(),character.getPositionY());
+
+				font = new Font("SansSerif", Font.PLAIN, 20);
+				g.setColor(Color.BLACK);
+				metrics = g.getFontMetrics(font);
+				g.fillRect(0,0,200,200);
+
+				if(MyKeyboard1.isKeyPressed(KeyEvent.VK_SHIFT)){
+					status = Status.GAME;
+				}
+				break;
 			case BATTLE:
 				font = new Font("SansSerif", Font.PLAIN, 20);
 				metrics = g.getFontMetrics(font);
@@ -173,7 +191,6 @@ public class MyMain1 /*implements Runnable*/{
 	            g.drawString("人間",35,30);	//一人目　キャラ名
 	            g.drawString("HP:"+Player.hitPoint,(MyFrame1.STATUS_WIDTH / 2) - (metrics.stringWidth("HP:"+Player.hitPoint) / 2) ,60);	//HP
 	            g.drawString("MP:"+Player.hitPoint,(MyFrame1.STATUS_WIDTH / 2) - (metrics.stringWidth("MP:"+Player.magicPoint) / 2), 90);	//MP
-
 	            if(MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)) status = Status.GAME;
 				break;
 			case GAME_OVER:
@@ -186,6 +203,7 @@ public class MyMain1 /*implements Runnable*/{
 
 			myFrame1.panel.draw();
 			//ここの処理？
+			System.out.println(status);
 			try {
 	        	long runTime = System.currentTimeMillis() - startTime;
 	            if(runTime<(2000 / fps)) {
