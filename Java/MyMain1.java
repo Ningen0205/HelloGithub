@@ -31,6 +31,7 @@ public class MyMain1 /*implements Runnable*/{
 	Status status;
 	
 	public static Image mapImage;		//マップチップ
+	public static Image itemBoxImage;
 	public static Image charImage;		//キャラチップ
 
 	//ウィンドウサイズ
@@ -75,8 +76,9 @@ public class MyMain1 /*implements Runnable*/{
 		WINDOW_HEIGHT = MyFrame1.WINDOW_HEIGHT;
 		JTextField name = new JTextField();
 		charImage = Toolkit.getDefaultToolkit().getImage("Java/Images/pipo-xmaschara01.png");
-//	charImage = Toolkit.getDefaultToolkit().getImage(Java\Images\pipo-xmaschara01.png)
+		itemBoxImage = Toolkit.getDefaultToolkit().getImage("java/Images/itemBox.png");
 		mapImage = Toolkit.getDefaultToolkit().getImage("Java/Images/WorldMap-A2.png");//マップのマップチップ
+		
 		draw = new Draw();
 		g = myFrame1.panel.image.getGraphics();	//パネル
 //		g = myFrame1.comp.getGraphics();	//パネル
@@ -137,7 +139,9 @@ public class MyMain1 /*implements Runnable*/{
 				//どのキーを押したかのチェック
                 if(MyKeyboard1.isKeyPressed(KeyEvent.VK_LEFT)) {
                 	if(character.getDirection() == Character.LEFT) {
-                		character.setPositionX(character.getPositionX()-32);
+						if(Traffic.canTraffic(character.getDirection(),character.getPositionX(),character.getPositionY())){
+							character.setPositionX(character.getPositionX()-32);
+						}
                 	}
                 	else{
                 		character.setDirection(Character.LEFT);
@@ -221,11 +225,16 @@ public class MyMain1 /*implements Runnable*/{
 				break;
 
 			case MENU_ITEM:
-				g.fillRect(100,100,200,400);//枠内描画
-				g.setColor(Color.WHITE);
-				g.drawRect(100,100,200,400);//外枠描画
+				draw.drawMenuItem();
+				if(MyKeyboard1.isKeyPressed(KeyEvent.VK_SHIFT)){
+					status = Status.MENU;
+				}
 				break;
 			case MENU_STATUS:
+					draw.drawMenuStatus();
+					if(MyKeyboard1.isKeyPressed(KeyEvent.VK_SHIFT)){
+						status = Status.MENU;
+					}
 				break;
 			case MENU_SAVE:
 				break;
