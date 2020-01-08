@@ -19,8 +19,8 @@ import javax.swing.JComponent;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import io.github.kusaanko.Shooting.EnumShootingScreen;
-import io.github.kusaanko.Shooting.Keyboard;
+/*import io.github.kusaanko.Shooting.EnumShootingScreen;
+import io.github.kusaanko.Shooting.Keyboard;*/
 
 public class MyMain1 /*implements Runnable*/{
 	//基礎描画関連
@@ -57,7 +57,9 @@ public class MyMain1 /*implements Runnable*/{
     long fpsTime = 0;
     int fps = 30;
     int FPS = 0;
-    int FPSCount = 0;
+	int FPSCount = 0;
+	
+	int selectedIndex = 0;
     
     //Characterの位置とか向き
     static Character character;
@@ -127,8 +129,9 @@ public class MyMain1 /*implements Runnable*/{
 				if(MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)){
 					status = Status.BATTLE;
 				}
-
+				//SHIFTでメニュー表示
 				if(MyKeyboard1.isKeyPressed(KeyEvent.VK_SHIFT)){
+					selectedIndex = 0;	//一番上にカーソルを合わせる
 					status = Status.MENU;
 				}
 				//どのキーを押したかのチェック
@@ -167,17 +170,66 @@ public class MyMain1 /*implements Runnable*/{
                 draw.drawChar(character.getPositionX(),character.getPositionY());
 				break;
 			case MENU:
-				draw.drawLayer();
+				draw.drawMenu(selectedIndex);
+/*				draw.drawLayer();
 				draw.drawChar(character.getPositionX(),character.getPositionY());
-
-				font = new Font("SansSerif", Font.PLAIN, 20);
+				
+				font = new Font("SansSerif", Font.PLAIN, 15);
 				g.setColor(Color.BLACK);
 				metrics = g.getFontMetrics(font);
-				g.fillRect(0,0,200,200);
+				g.setFont(font);
+				g.fillRect(0,0,160,170);//枠内描画
+				g.setColor(Color.WHITE);
+				g.drawRect(0,0,160,170);//外枠描画
+				g.drawString("アイテム",(150/2) - (metrics.stringWidth("アイテム") /2),30);
+				g.drawString("ステータス",(150/2) - (metrics.stringWidth("ステータス") /2),70);
+				g.drawString("セーブ",(150/2) - (metrics.stringWidth("セーブ") /2),110);
+				g.drawString("終了",(150/2) - (metrics.stringWidth("終了") /2),150);
+
+				g.drawLine(20,(30+40*selectedIndex),130,(30+40*selectedIndex));	//選択している場所へ線の描画*/
+				
+				if(MyKeyboard1.isKeyPressed(KeyEvent.VK_DOWN)){
+					selectedIndex += 1;
+					selectedIndex %= 4;
+				}
+
+				if(MyKeyboard1.isKeyPressed(KeyEvent.VK_UP)){
+					selectedIndex -= 1;
+					if(selectedIndex < 0) selectedIndex = 3;
+				}
+
+				if(MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)){
+					switch(selectedIndex){
+						case 0:
+							status = status.MENU_ITEM;
+							break;
+						case 1:
+							status = status.MENU_STATUS;
+							break;
+						case 2:
+							status = status.MENU_SAVE;
+							break;
+						case 3:
+							status = status.MENU_TERMINATION;
+							break;
+					}
+				}
 
 				if(MyKeyboard1.isKeyPressed(KeyEvent.VK_SHIFT)){
 					status = Status.GAME;
 				}
+				break;
+
+			case MENU_ITEM:
+				g.fillRect(100,100,200,400);//枠内描画
+				g.setColor(Color.WHITE);
+				g.drawRect(100,100,200,400);//外枠描画
+				break;
+			case MENU_STATUS:
+				break;
+			case MENU_SAVE:
+				break;
+			case MENU_TERMINATION:
 				break;
 			case BATTLE:
 				font = new Font("SansSerif", Font.PLAIN, 20);

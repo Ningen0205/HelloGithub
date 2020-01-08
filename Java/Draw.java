@@ -3,19 +3,19 @@ package GUI.copy;
 import java.awt.*;
 
 public class Draw {
-	//ƒ}ƒbƒvŠÖŒW
-	public int[] mapLayer1;	//ƒ}ƒbƒvƒ}ƒX‚ÌID
-	public int[] mapLayer2; //ƒ}ƒbƒvƒ}ƒX‚ÌID
-	int mapIndex;	//•`‰æ‚·‚éƒ}ƒX‚Ì”z—ñ‚É‘Î‚·‚éƒCƒ“ƒfƒbƒNƒX
-	int squareIdLayer1;	//ƒŒƒCƒ„1‚Ì•`‰æ‚·‚é‚Æ‚«‚Ì‘Î‰ID
-	int squareIdLayer2;//ƒŒƒCƒ„2‚Ì•`‰æ‚·‚é‚Æ‚«‚Ì‘Î‰ID
-	int squareIdImageBitXLayer1;//ƒ}ƒbƒvƒ`ƒbƒv‚Ì•`‰æ‚·‚éêŠ(‰¡)
-	int squareIdImageBitXLayer2;//ƒ}ƒbƒvƒ`ƒbƒv‚Ì•`‰æ‚·‚éêŠi‰¡j
-	int squareIdImageBitYLayer1;//ƒ}ƒbƒvƒ`ƒbƒv‚Ì•`‰æ‚·‚éêŠicj
-	int squareIdImageBitYLayer2;//ƒ}ƒbƒvƒ`ƒbƒv‚Ì•`‰æ‚·‚éêŠicj
+	//ãƒãƒƒãƒ—é–¢ä¿‚
+	public int[] mapLayer1;	//ãƒãƒƒãƒ—ãƒã‚¹ã®ID
+	public int[] mapLayer2; //ãƒãƒƒãƒ—ãƒã‚¹ã®ID
+	int mapIndex;	//æç”»ã™ã‚‹ãƒã‚¹ã®é…åˆ—ã«å¯¾ã™ã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	int squareIdLayer1;	//ãƒ¬ã‚¤ãƒ¤1ã®æç”»ã™ã‚‹ã¨ãã®å¯¾å¿œID
+	int squareIdLayer2;//ãƒ¬ã‚¤ãƒ¤2ã®æç”»ã™ã‚‹ã¨ãã®å¯¾å¿œID
+	int squareIdImageBitXLayer1;//ãƒãƒƒãƒ—ãƒãƒƒãƒ—ã®æç”»ã™ã‚‹å ´æ‰€(æ¨ª)
+	int squareIdImageBitXLayer2;//ãƒãƒƒãƒ—ãƒãƒƒãƒ—ã®æç”»ã™ã‚‹å ´æ‰€ï¼ˆæ¨ªï¼‰
+	int squareIdImageBitYLayer1;//ãƒãƒƒãƒ—ãƒãƒƒãƒ—ã®æç”»ã™ã‚‹å ´æ‰€ï¼ˆç¸¦ï¼‰
+	int squareIdImageBitYLayer2;//ãƒãƒƒãƒ—ãƒãƒƒãƒ—ã®æç”»ã™ã‚‹å ´æ‰€ï¼ˆç¸¦ï¼‰
 	
-	final int SQUARE_SIZE = 32;	//‚Pƒ}ƒX‚ÌƒTƒCƒY
-	final int SQUARE_SUM = 15;	//c‰¡‚Ìƒ}ƒX‚ÌƒTƒCƒY
+	final int SQUARE_SIZE = 32;	//ï¼‘ãƒã‚¹ã®ã‚µã‚¤ã‚º
+	final int SQUARE_SUM = 15;	//ç¸¦æ¨ªã®ãƒã‚¹ã®ã‚µã‚¤ã‚º
 	
 	Character character;
 	Image mapImage;
@@ -29,23 +29,23 @@ public class Draw {
         mapLayer1 = Map.getLayer1();
         mapLayer2 = Map.getLayer2();
         
-		g = MyMain1.myFrame1.panel.image.getGraphics();	//ƒpƒlƒ‹
+		g = MyMain1.myFrame1.panel.image.getGraphics();	//ãƒ‘ãƒãƒ«
 	}
 	
 	void drawLayer(){
 		mapIndex = 0;
-		//ƒŒƒCƒ„1,2‚Ì•`‰æ
+		//ãƒ¬ã‚¤ãƒ¤1,2ã®æç”»
 		for(int i=0; i<SQUARE_SUM; i++) {	
 			for(int j=0; j<SQUARE_SUM; j++) {
 				squareIdLayer1 = mapLayer1[mapIndex];
 				squareIdLayer2 = mapLayer2[mapIndex];
-				squareIdImageBitXLayer1 = (int)(squareIdLayer1%16)*32;//ƒ}ƒbƒvƒ`ƒbƒv‚Ì•`‰æ‚·‚éêŠ(‰¡)
-				squareIdImageBitXLayer2 = (int)(squareIdLayer2%16)*32;//ƒ}ƒbƒvƒ`ƒbƒv‚Ì•`‰æ‚·‚éêŠi‰¡j
-				squareIdImageBitYLayer1 = (int)(squareIdLayer1/16)*32;//ƒ}ƒbƒvƒ`ƒbƒv‚Ì•`‰æ‚·‚éêŠicj
-				squareIdImageBitYLayer2 = (int)(squareIdLayer2/16)*32;//ƒ}ƒbƒvƒ`ƒbƒv‚Ì•`‰æ‚·‚éêŠicj
+				squareIdImageBitXLayer1 = (int)(squareIdLayer1%16)*32;//ãƒãƒƒãƒ—ãƒãƒƒãƒ—ã®æç”»ã™ã‚‹å ´æ‰€(æ¨ª)
+				squareIdImageBitXLayer2 = (int)(squareIdLayer2%16)*32;//ãƒãƒƒãƒ—ãƒãƒƒãƒ—ã®æç”»ã™ã‚‹å ´æ‰€ï¼ˆæ¨ªï¼‰
+				squareIdImageBitYLayer1 = (int)(squareIdLayer1/16)*32;//ãƒãƒƒãƒ—ãƒãƒƒãƒ—ã®æç”»ã™ã‚‹å ´æ‰€ï¼ˆç¸¦ï¼‰
+				squareIdImageBitYLayer2 = (int)(squareIdLayer2/16)*32;//ãƒãƒƒãƒ—ãƒãƒƒãƒ—ã®æç”»ã™ã‚‹å ´æ‰€ï¼ˆç¸¦ï¼‰
 				g.drawImage(mapImage,j*32,i*32,(j*32)+32,(i*32)+32,
 						squareIdImageBitXLayer1,squareIdImageBitYLayer1,squareIdImageBitXLayer1+32,squareIdImageBitYLayer1+32,MyMain1.myFrame1);
-				if(squareIdLayer1 == squareIdLayer2) {	//ƒŒƒCƒ„‚P‚Æ‚Q‚ª“¯‚¶ID‚È‚ç‚ÎƒŒƒCƒ„2‚Ì•`‰æ‚ğs‚í‚È‚¢
+				if(squareIdLayer1 == squareIdLayer2) {	//ãƒ¬ã‚¤ãƒ¤ï¼‘ã¨ï¼’ãŒåŒã˜IDãªã‚‰ã°ãƒ¬ã‚¤ãƒ¤2ã®æç”»ã‚’è¡Œã‚ãªã„
 					mapIndex++;
 					continue;
 				}
@@ -62,6 +62,25 @@ public class Draw {
 	void drawChar(int positionX, int positionY) {
 		g.drawImage(charImage, character.getPositonX(),character.getPositionY(), character.getPositonX()+32,character.getPositionY()+32,
 								32, 32*character.getDirection(), 64, 32*character.getDirection() + 32, MyMain1.myFrame1);
+	}
+
+	void drawMenu(int selectedIndex){
+		drawLayer();
+		drawChar(character.getPositionX(),character.getPositionY());
+		
+		Font font = new Font("SansSerif", Font.PLAIN, 15);
+		g.setColor(Color.BLACK);
+		FontMetrics metrics = g.getFontMetrics(font);
+		g.setFont(font);
+		g.fillRect(0,0,160,170);//æ å†…æç”»
+		g.setColor(Color.WHITE);
+		g.drawRect(0,0,160,170);//å¤–æ æç”»
+		g.drawString("ã‚¢ã‚¤ãƒ†ãƒ ",(150/2) - (metrics.stringWidth("ã‚¢ã‚¤ãƒ†ãƒ ") /2),30);
+		g.drawString("ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹",(150/2) - (metrics.stringWidth("ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹") /2),70);
+		g.drawString("ã‚»ãƒ¼ãƒ–",(150/2) - (metrics.stringWidth("ã‚»ãƒ¼ãƒ–") /2),110);
+		g.drawString("çµ‚äº†",(150/2) - (metrics.stringWidth("çµ‚äº†") /2),150);
+
+		g.drawLine(20,(30+40*selectedIndex),130,(30+40*selectedIndex));	//é¸æŠã—ã¦ã„ã‚‹å ´æ‰€ã¸ç·šã®æç”»
 	}
 
 }

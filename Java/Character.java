@@ -1,5 +1,5 @@
 package GUI.copy;
-
+import java.util.ArrayList;
 public class Character {
 	
 	private int positionX;	//キャラのX座標の位置
@@ -11,6 +11,8 @@ public class Character {
 	public static final int RIGHT = 2;
 	public static final int UP = 3;
 	
+	public ArrayList<Integer> itemsOwnedList = new ArrayList<Integer>();	//所持しているアイテムのアイテムIDを管理
+
 	Character(){
 		positionX = 32;
 		positionY = 32;
