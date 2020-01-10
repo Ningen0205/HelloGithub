@@ -1,3 +1,3 @@
 public class ItemID{
-    final String ITEM_NAME[] = {"やくそう","せいすい","はがねのつるぎ","はがねのよろい"};
+    static final String ITEM_NAME[] = {"欠番","やくそう","せいすい","はがねのつるぎ","はがねのよろい"};
 }

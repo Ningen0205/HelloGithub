@@ -1,4 +1,3 @@
-package GUI.copy;
 import java.util.ArrayList;
 public class Character {
 	
@@ -11,12 +10,16 @@ public class Character {
 	public static final int RIGHT = 2;
 	public static final int UP = 3;
 	
-	public ArrayList<Integer> itemsOwnedList = new ArrayList<Integer>();	//所持しているアイテムのアイテムIDを管理
+	private static ArrayList<Integer> itemsOwnedList = new ArrayList<Integer>();	//所持しているアイテムのアイテムIDを管理
 
 	Character(){
-		positionX = 32;
-		positionY = 32;
+		positionX = 64;
+		positionY = 64;
 	}
+	
+	ArrayList<Integer> getItemsOwnedList(){
+		return itemsOwnedList;
+	} 
 	
 	void additems(int itemID){
 		itemsOwnedList.add(itemID);
@@ -57,4 +60,5 @@ public class Character {
 	int getPositionY(){
 		return positionY;
 	}
+
 }

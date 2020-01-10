@@ -1,11 +1,8 @@
-package GUI.copy;
-import javax.swing.*;
 
-import io.github.kusaanko.Shooting.Keyboard;
+import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 public class MyFrame1 extends JFrame{
 	
 	/**

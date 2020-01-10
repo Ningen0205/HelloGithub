@@ -1,7 +1,5 @@
-package GUI.copy;
-
 import java.awt.*;
-
+import java.util.ArrayList;
 public class Draw {
 	//マップ関係
 	public int[] mapLayer1;	//マップマスのID
@@ -27,6 +25,8 @@ public class Draw {
 	Image charImage;
 	Image itemBoxImage;
 	Graphics g;
+
+
 	
 	Draw(){
 		character = MyMain1.character;
@@ -96,7 +96,7 @@ public class Draw {
 		g.drawLine(20,(30+40*selectedIndex),130,(30+40*selectedIndex));	//選択している場所へ線の描画
 	}
 
-	void drawMenuItem(){
+	void drawMenuItem(int selectedIndex){
 		drawLayer();
 		drawChar(character.getPositionX(),character.getPositionY());
 		font = new Font("SansSerif", Font.PLAIN, 15);
@@ -104,6 +104,18 @@ public class Draw {
 		g.fillRect(50,50,200,300);//枠内描画
 		g.setColor(Color.WHITE);
 		g.drawRect(50,50,200,300);//外枠描画
+
+		ArrayList<Integer> itemsOwnedList = character.getItemsOwnedList();
+		int itemPositionX = 100;
+		int itemPositionY = 80; 
+		if(itemsOwnedList != null){
+			for (Integer value : itemsOwnedList) {
+				g.drawString(ItemID.ITEM_NAME[value],itemPositionX,itemPositionY);
+				itemPositionY += 30;
+			}
+		}
+
+		g.drawLine(100,(30+30*selectedIndex),150,(30+30*selectedIndex));	//選択している場所へ線の描画
 	}
 
 	void drawMenuStatus(){

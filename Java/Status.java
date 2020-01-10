@@ -1,4 +1,3 @@
-package GUI.copy;
 
 public enum Status {
     START,

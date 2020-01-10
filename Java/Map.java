@@ -1,4 +1,3 @@
-package GUI.copy;
 
 public class Map {
 	public static final int[] LAYER1 = {
@@ -37,7 +36,7 @@ public class Map {
 		44,45,7,7,7,7,7,7,7,7,7,7,7,7,7
 	};
 
-	public static final int[] ITEM_LAYER = {
+	public static int[] ITEM_LAYER = {
 		0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -54,7 +53,10 @@ public class Map {
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 	};
-	
+
+	void setItemLayer(int index){
+		ITEM_LAYER[]
+	}
 
 	public static int[] getLayer1() {
 		return LAYER1;

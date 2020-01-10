@@ -1,9 +1,8 @@
-package GUI.copy;
 
 import javax.swing.JFrame;
-import javax.swing.WindowConstants;
 
 public class PlayerNameFrame extends JFrame{
+	static final long serialVersionUID = 1L;
 	static final int WINDOW_HEIGHT = 512+7;//15*15がピッタリ入るサイズ
 	static final int WINDOW_WIDTH = 496;//15*15がピッタリ入るサイズ
 	
