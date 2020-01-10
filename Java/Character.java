@@ -17,10 +17,13 @@ public class Character {
 		positionY = 64;
 	}
 	
+<<<<<<< HEAD
 	ArrayList<Integer> getItemsOwnedList(){
 		return itemsOwnedList;
 	} 
 	
+=======
+>>>>>>> 699e48be48dd2da29a452ef038a53a5a7dbf7a3f
 	void additems(int itemID){
 		itemsOwnedList.add(itemID);
 	}
