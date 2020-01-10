@@ -18,6 +18,10 @@ public class Character {
 		positionY = 32;
 	}
 	
+	void additems(int itemID){
+		itemsOwnedList.add(itemID);
+	}
+
 	int getDirection() {
 		return direction;
 	}
