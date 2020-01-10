@@ -96,11 +96,7 @@ public class Draw {
 		g.drawLine(20,(30+40*selectedIndex),130,(30+40*selectedIndex));	//選択している場所へ線の描画
 	}
 
-<<<<<<< HEAD
 	void drawMenuItem(int selectedIndex){
-=======
-	void drawMenuItem(){
->>>>>>> 699e48be48dd2da29a452ef038a53a5a7dbf7a3f
 		drawLayer();
 		drawChar(character.getPositionX(),character.getPositionY());
 		font = new Font("SansSerif", Font.PLAIN, 15);
@@ -108,7 +104,6 @@ public class Draw {
 		g.fillRect(50,50,200,300);//枠内描画
 		g.setColor(Color.WHITE);
 		g.drawRect(50,50,200,300);//外枠描画
-<<<<<<< HEAD
 
 		ArrayList<Integer> itemsOwnedList = character.getItemsOwnedList();
 		int itemPositionX = 100;
@@ -121,8 +116,6 @@ public class Draw {
 		}
 
 		g.drawLine(100,(30+30*selectedIndex),150,(30+30*selectedIndex));	//選択している場所へ線の描画
-=======
->>>>>>> 699e48be48dd2da29a452ef038a53a5a7dbf7a3f
 	}
 
 	void drawMenuStatus(){

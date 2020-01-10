@@ -36,11 +36,7 @@ public class Map {
 		44,45,7,7,7,7,7,7,7,7,7,7,7,7,7
 	};
 
-<<<<<<< HEAD
 	public static int[] ITEM_LAYER = {
-=======
-	public static final int[] ITEM_LAYER = {
->>>>>>> 699e48be48dd2da29a452ef038a53a5a7dbf7a3f
 		0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -58,9 +54,9 @@ public class Map {
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 	};
 
-	void setItemLayer(int index){
-		ITEM_LAYER[]
-	}
+//	void setItemLayer(int index){
+//		ITEM_LAYER[]
+//	}
 
 	public static int[] getLayer1() {
 		return LAYER1;

@@ -69,13 +69,8 @@ public class MyMain1 /*implements Runnable*/{
 		final JTextField name = new JTextField();
 		charImage = Toolkit.getDefaultToolkit().getImage("Java/Images/pipo-xmaschara01.png");
 		itemBoxImage = Toolkit.getDefaultToolkit().getImage("java/Images/itemBox.png");
-<<<<<<< HEAD
 		mapImage = Toolkit.getDefaultToolkit().getImage("Java/Images/WorldMap-A2.png");// マップのマップチップ
 
-=======
-		mapImage = Toolkit.getDefaultToolkit().getImage("Java/Images/WorldMap-A2.png");//マップのマップチップ
-		
->>>>>>> 699e48be48dd2da29a452ef038a53a5a7dbf7a3f
 		draw = new Draw();
 		g = myFrame1.panel.image.getGraphics(); // パネル
 		// g = myFrame1.comp.getGraphics(); //パネル
@@ -139,7 +134,6 @@ public class MyMain1 /*implements Runnable*/{
 					selectedIndex = 0; // 一番上にカーソルを合わせる
 					status = Status.MENU;
 				}
-<<<<<<< HEAD
 				// どのキーを押したかのチェック
 				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_LEFT)) {
 					if (character.getDirection() == Character.LEFT) {
@@ -153,8 +147,7 @@ public class MyMain1 /*implements Runnable*/{
 				}
 				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_RIGHT)) {
 					if (character.getDirection() == Character.RIGHT) {
-						if (Traffic.canTraffic(character.getDirection(), character.getPositionX(),
-								character.getPositionY())) {
+						if (Traffic.canTraffic(character.getDirection(), character.getPositionX(),character.getPositionY())) {
 							character.setPositionX(character.getPositionX() + 32);
 						}
 
@@ -185,44 +178,6 @@ public class MyMain1 /*implements Runnable*/{
 					}
 				}
 				draw.drawChar(character.getPositionX(), character.getPositionY());
-=======
-				//どのキーを押したかのチェック
-                if(MyKeyboard1.isKeyPressed(KeyEvent.VK_LEFT)) {
-                	if(character.getDirection() == Character.LEFT) {
-						if(Traffic.canTraffic(character.getDirection(),character.getPositionX(),character.getPositionY())){
-							character.setPositionX(character.getPositionX()-32);
-						}
-                	}
-                	else{
-                		character.setDirection(Character.LEFT);
-                	}
-                }
-                if(MyKeyboard1.isKeyPressed(KeyEvent.VK_RIGHT)) {
-                	if(character.getDirection() == Character.RIGHT) {
-                		character.setPositionX(character.getPositionX()+32);
-                	}
-                	else {
-                		character.setDirection(Character.RIGHT);
-                	}
-                }
-                if(MyKeyboard1.isKeyPressed(KeyEvent.VK_DOWN)) {
-                	if(character.getDirection() == Character.DOWN) {
-                		character.setPositionY(character.getPositionY()+32);
-                	}
-                	else {
-                		character.setDirection(Character.DOWN);
-                	}
-                }
-                if(MyKeyboard1.isKeyPressed(KeyEvent.VK_UP)) {
-                	if(character.getDirection() == Character.UP) {
-                		character.setPositionY(character.getPositionY()-32);
-                	}
-                	else {
-                		character.setDirection(Character.UP);
-                	}
-                }
-                draw.drawChar(character.getPositionX(),character.getPositionY());
->>>>>>> 699e48be48dd2da29a452ef038a53a5a7dbf7a3f
 				break;
 			case MENU:
 				draw.drawMenu(selectedIndex);
@@ -275,8 +230,6 @@ public class MyMain1 /*implements Runnable*/{
 						selectedIndex = 7;
 				}
 
-				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_SHIFT)) {
-				draw.drawMenuItem();
 				if(MyKeyboard1.isKeyPressed(KeyEvent.VK_SHIFT)){
 					status = Status.MENU;
 				}
