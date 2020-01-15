@@ -4,11 +4,11 @@ public class Draw {
 	//マップ関係
 	public int[] mapLayer1;	//マップマスのID
 	public int[] mapLayer2; //マップマスのID
-	public int[] itemLayer;	//アイテムID
+	public int[] itemLayer;	//宝箱の種類
 	int mapIndex;	//描画するマスの配列に対するインデックス
 	int squareIdLayer1;	//レイヤ1の描画するときの対応ID
 	int squareIdLayer2;//レイヤ2の描画するときの対応ID
-	int itemIDLayer;	//描画する際の対応ID
+	int drawItemLayer;	//描画する際の宝箱の種類
 	int squareIdImageBitXLayer1;//マップチップの描画する場所(横)
 	int squareIdImageBitXLayer2;//マップチップの描画する場所（横）
 	int squareIdImageBitYLayer1;//マップチップの描画する場所（縦）
@@ -28,16 +28,18 @@ public class Draw {
 
 
 	
-	Draw(){
+	Draw(Graphics gra){
+
 		character = MyMain1.character;
-		mapImage = MyMain1.mapImage;
-		charImage = MyMain1.charImage;
-		itemBoxImage = MyMain1.itemBoxImage;
+		charImage = Toolkit.getDefaultToolkit().getImage("Java/Images/pipo-xmaschara01.png");
+		itemBoxImage = Toolkit.getDefaultToolkit().getImage("java/Images/itemBox.png");
+		mapImage = Toolkit.getDefaultToolkit().getImage("Java/Images/WorldMap-A2.png");// マップのマップチップ
         mapLayer1 = Map.getLayer1();
 		mapLayer2 = Map.getLayer2();
 		itemLayer = Map.getItemLayer();
         
-		g = MyMain1.myFrame1.panel.image.getGraphics();	//パネル
+//		g = MyMain1.myFrame1.panel.image.getGraphics();	//パネル
+		g = gra;
 	}
 	
 	void drawLayer(){
@@ -47,16 +49,18 @@ public class Draw {
 			for(int j=0; j<SQUARE_SUM; j++) {
 				squareIdLayer1 = mapLayer1[mapIndex];
 				squareIdLayer2 = mapLayer2[mapIndex];
-				itemIDLayer = itemLayer[mapIndex];
+				drawItemLayer = itemLayer[mapIndex];
 				squareIdImageBitXLayer1 = (int)(squareIdLayer1%16)*32;//マップチップの描画する場所(横)
 				squareIdImageBitXLayer2 = (int)(squareIdLayer2%16)*32;//マップチップの描画する場所（横）
 				squareIdImageBitYLayer1 = (int)(squareIdLayer1/16)*32;//マップチップの描画する場所（縦）
 				squareIdImageBitYLayer2 = (int)(squareIdLayer2/16)*32;//マップチップの描画する場所（縦）
 				g.drawImage(mapImage,j*32,i*32,(j*32)+32,(i*32)+32,
 						squareIdImageBitXLayer1,squareIdImageBitYLayer1,squareIdImageBitXLayer1+32,squareIdImageBitYLayer1+32,MyMain1.myFrame1);
-				if(itemIDLayer != 0){
+				
+				if(drawItemLayer != 0){
+					drawItemLayer -= 1;//(一つずらす)
 					g.drawImage(itemBoxImage,j*32,i*32,(j*32)+32,(i*32)+32,
-						0,0,32,32,MyMain1.myFrame1);
+								0,drawItemLayer*32,32,(drawItemLayer*32)+32,MyMain1.myFrame1);
 				}
 				if(squareIdLayer1 == squareIdLayer2) {	//レイヤ１と２が同じIDならばレイヤ2の描画を行わない
 					mapIndex++;
@@ -64,7 +68,7 @@ public class Draw {
 				}
 				else {
 				g.drawImage(mapImage,j*32,i*32,(j*32)+32,(i*32)+32,
-						squareIdImageBitXLayer2,squareIdImageBitYLayer2,squareIdImageBitXLayer2+32,squareIdImageBitYLayer2+32,MyMain1.myFrame1);
+					squareIdImageBitXLayer2,squareIdImageBitYLayer2,squareIdImageBitXLayer2+32,squareIdImageBitYLayer2+32,MyMain1.myFrame1);
 					mapIndex++;
 				}
 				
@@ -126,6 +130,18 @@ public class Draw {
 		g.fillRect(50,50,200,300);//枠内描画
 		g.setColor(Color.WHITE);
 		g.drawRect(50,50,200,300);//外枠描画
+	}
+
+	void drawTextBox(int itemId){
+		font = new Font("SansSerif", Font.PLAIN, 25);
+		g.setColor(Color.BLACK);
+		metrics = g.getFontMetrics(font);
+		g.setFont(font);
+		g.fillRect(0, 300, 479, 179);
+		g.setColor(Color.WHITE);
+		g.drawRect(0, 300, 479, 179);
+		g.drawString(ItemID.ITEM_NAME[itemId]+"をゲットした!", (MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth(ItemID.ITEM_NAME[itemId]+"をゲットした!") / 2), 400);
+
 	}
 
 }

@@ -3,6 +3,7 @@ public enum Status {
     START,
     PLAYER_NAME_DECISION,
     GAME,
+    GAME_ITEMGET,
     MENU,
     MENU_ITEM,
     MENU_STATUS,

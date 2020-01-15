@@ -7,7 +7,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import javax.swing.JTextField;
+//import javax.swing.JTextField;
+import java.util.Random;
 
 
 
@@ -53,41 +54,51 @@ public class MyMain1 /*implements Runnable*/{
 	int FPSCount = 0;
 	
 	int selectedIndex = 0;
+
+	//エンカウント関連
+	Random random;
+	int encounter;
     
     //Characterの位置とか向き
-    static Character character;
+	static Character character;
+	int nextItemId;	//あいてむのiD
 
 	
 	public MyMain1(){
 		
-		final boolean test = true;
+//		boolean test = true;
+
+		random = new Random();
+		encounter = 0;
 
 		character = new Character();
 		myFrame1 = new MyFrame1();
 		WINDOW_WIDTH = MyFrame1.WINDOW_WIDTH;
 		WINDOW_HEIGHT = MyFrame1.WINDOW_HEIGHT;
-		final JTextField name = new JTextField();
 		charImage = Toolkit.getDefaultToolkit().getImage("Java/Images/pipo-xmaschara01.png");
 		itemBoxImage = Toolkit.getDefaultToolkit().getImage("java/Images/itemBox.png");
 		mapImage = Toolkit.getDefaultToolkit().getImage("Java/Images/WorldMap-A2.png");// マップのマップチップ
 
-		draw = new Draw();
+
 		g = myFrame1.panel.image.getGraphics(); // パネル
-		// g = myFrame1.comp.getGraphics(); //パネル
+
+		draw = new Draw(g);
+//		g = myFrame1.comp.getGraphics(); //パネル
 		status = Status.START;
 		loop = true;
-
-		// FPS
-		long startTime;
-		long fpsTime = 0;
-		final int fps = 30;
-		int FPS = 0;
-		int FPSCount = 0;
 
 		// マップID取得
 		mapLayer1 = Map.getLayer1();
 		mapLayer2 = Map.getLayer2();
 
+	}
+
+	public static void main(final String[] args) {
+		MyMain1 mainObject = new MyMain1();
+		mainObject.Main();
+	}
+
+	void Main(){
 		while (loop) {
 			if ((System.currentTimeMillis() - fpsTime) >= 1000) {
 				fpsTime = System.currentTimeMillis();
@@ -122,11 +133,14 @@ public class MyMain1 /*implements Runnable*/{
 			case GAME:
 				draw.drawLayer();
 				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)) {
-					final int nextItemId = Map.ITEM_LAYER[Traffic.getNext(character.getDirection(),
+					nextItemId = Map.ITEMID_LAYER[Traffic.getNext(character.getDirection(),
 							character.getPositionX(), character.getPositionY())];
-					System.out.println(nextItemId);
+//					System.out.println(nextItemId);
+
 					if (nextItemId != 0) {
 						character.additems(nextItemId);
+						Map.EmptyTreasureBox(Traffic.getNext(character.getDirection(),character.getPositionX(), character.getPositionY()));
+						status = Status.GAME_ITEMGET;
 					}
 				}
 				// SHIFTでメニュー表示
@@ -134,6 +148,15 @@ public class MyMain1 /*implements Runnable*/{
 					selectedIndex = 0; // 一番上にカーソルを合わせる
 					status = Status.MENU;
 				}
+
+				if(MyKeyboard1.isKeyPressed(KeyEvent.VK_LEFT) || MyKeyboard1.isKeyPressed(KeyEvent.VK_RIGHT) || 
+						MyKeyboard1.isKeyPressed(KeyEvent.VK_DOWN) || MyKeyboard1.isKeyPressed(KeyEvent.VK_UP)){
+						encounter = random.nextInt(100);
+						if(encounter > 90){
+							status = Status.BATTLE;
+						}
+				}
+
 				// どのキーを押したかのチェック
 				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_LEFT)) {
 					if (character.getDirection() == Character.LEFT) {
@@ -178,6 +201,14 @@ public class MyMain1 /*implements Runnable*/{
 					}
 				}
 				draw.drawChar(character.getPositionX(), character.getPositionY());
+				break;
+			case GAME_ITEMGET:
+				draw.drawLayer();
+				draw.drawTextBox(nextItemId);
+				draw.drawChar(character.getPositionX(), character.getPositionY());
+				if(MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)){
+					status = Status.GAME;
+				}
 				break;
 			case MENU:
 				draw.drawMenu(selectedIndex);
@@ -285,10 +316,6 @@ public class MyMain1 /*implements Runnable*/{
 			}
 
 		}
-	}
-
-	public static void main(final String[] args) {
-			new MyMain1();
 	}
 
 }
