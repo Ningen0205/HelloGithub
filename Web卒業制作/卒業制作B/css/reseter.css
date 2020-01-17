@@ -163,7 +163,6 @@ ol, ul { list-style-position: inside; }
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
-
 }
 
 #event_wrapper{
@@ -171,7 +170,12 @@ ol, ul { list-style-position: inside; }
 	margin-right: auto;
 	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 	width:950px;
-	
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+#event_halloween{
+	margin-bottom: 40px;
 }
 
 #event_image_bat{
@@ -180,11 +184,15 @@ ol, ul { list-style-position: inside; }
 }
 
 .event_background_image{
-	height: 100px;
+	line-height: 100px;
 	background-image: url("../images/event_bk02.jpg");
 	background-repeat: repart;
 	margin-top: 40px;
 	margin-bottom: auto;
+}
+
+.event_background_image_bigfont{
+	font-size: 35px;
 }
 
 #event_parade{
@@ -196,10 +204,21 @@ ol, ul { list-style-position: inside; }
 
 #event_dance{
 	background-color: #E2982F;
+	padding-top: 40px;
 }
 
 .event_image_dance{
 	margin:0;
+	vertical-align:middle;
+}
+
+.event_image_dance2{
+	margin-top: 20px;
+}
+
+#event_image_dance_date{
+	background-color: #000;
+	margin: 30px auto;
 }
 
 
