@@ -15,5 +15,8 @@ public enum Status {
     BATTLE_MESSAGE2,
     BATTLE_MESSAGE3,
     BATTLE_MESSAGE4,
+
+    BATTLE_PLAYER_WIN,//プレイヤー勝利
+    BATTLE_PLAYER_LOSE, //負け
     GAME_OVER
 }

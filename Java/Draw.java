@@ -32,12 +32,12 @@ public class Draw {
 
 
 	
-	Draw(final Graphics gra){
+	Draw(Graphics gra){
 		WINDOW_WIDTH = MyFrame1.WINDOW_WIDTH;
 		WINDOW_HEIGHT = MyFrame1.WINDOW_HEIGHT;
 
 		character = MyMain1.character;
-		enemy = MyMain1.enemy;
+//		enemy = MyMain1.enemy;
 		charImage = Toolkit.getDefaultToolkit().getImage("Java/Images/pipo-xmaschara01.png");
 		itemBoxImage = Toolkit.getDefaultToolkit().getImage("java/Images/itemBox.png");
 		mapImage = Toolkit.getDefaultToolkit().getImage("Java/Images/WorldMap-A2.png");// マップのマップチップ
@@ -163,6 +163,10 @@ public class Draw {
 		g.drawString(character.getName(),(MyFrame1.STATUS_WIDTH / 2) - (metrics.stringWidth(character.getName()) / 2), 30); // 一人目 キャラ名
 		g.drawString("HP:" + character.getHitpoint(),
 				(MyFrame1.STATUS_WIDTH / 2) - (metrics.stringWidth("HP:" + character.getHitpoint()) / 2), 60); // HP
+		
+		if(enemy.eStatus == EnumBattleStatus.Existence){
+			g.drawImage(enemy.getImage(), 100,100,246,365,0,0,146,265,MyMain1.myFrame1);
+		}
 	}
 	void drawBattle(){
 		g.drawString(enemy.getName()+"が現れた！",(MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth(enemy.getName()+"が現れた！") / 2), 400);
@@ -193,6 +197,10 @@ public class Draw {
 	}
 
 	void drawBattleMessage2(int selectedIndex){
+		font = new Font("SansSerif", Font.PLAIN, 30);
+		metrics = g.getFontMetrics(font);
+		g.setColor(Color.WHITE);
+		g.setFont(font);
 		if(selectedIndex == 0){
 			g.drawString(enemy.getName()+"に"+character.getDamage()+"のダメージ！",(MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth(enemy.getName()+"に"+character.getDamage()+"のダメージ！")/2),390);
 		}
@@ -215,13 +223,49 @@ public class Draw {
 	}
 
 	void drawBattleMessage4(int selectedIndex){
+		font = new Font("SansSerif", Font.PLAIN, 30);
+		metrics = g.getFontMetrics(font);
+		g.setColor(Color.WHITE);
+		g.setFont(font);
 		if(selectedIndex == 0){
 			g.drawString(character.getName()+"に"+enemy.getDamage()+"のダメージ！",(MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth(character.getName()+"に"+enemy.getDamage()+"のダメージ！")/2),390);
 		}
 		else{
 	 		g.drawString(enemy.getName()+"は受けるダメージが減った！",(MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth(enemy.getName()+"は受けるダメージが減った！")/2),390);
 		}
+	}
 
+	void drawBattleWin(){
+		font = new Font("SansSerif", Font.PLAIN, 30);
+		metrics = g.getFontMetrics(font);
+		g.setColor(Color.WHITE);
+		g.setFont(font);
+		g.drawString(character.getName()+"は敵をたおした！",(MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth(character.getName()+"は敵をたおした！")/2),390);
+
+	}
+
+	void drawBattleLose(){
+		font = new Font("SansSerif", Font.PLAIN, 30);
+		metrics = g.getFontMetrics(font);
+		g.setColor(Color.WHITE);
+		g.setFont(font);
+		g.drawString(character.getName()+"は負けてしまった...",(MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth(character.getName()+"は負けてしまった...")/2),390);
+		
+	}
+
+	void drawGameOver(){
+		Font font = new Font("SansSerif", Font.PLAIN, 30);
+		g.setFont(font);
+		FontMetrics metrics = g.getFontMetrics(font);
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, WINDOW_WIDTH,WINDOW_HEIGHT);
+		g.setColor(Color.WHITE);
+		g.drawString("GAME OVER", (WINDOW_WIDTH / 2) - (metrics.stringWidth("GAME OVER") / 2), 100);
+		g.drawString("Press SPACE to Title",
+				(WINDOW_WIDTH / 2) - (metrics.stringWidth("Press SPACE to Title") / 2), 200);
+	}
+	void getEnemy(Enemy enemy){
+		this.enemy = enemy;
 	}
 
 }

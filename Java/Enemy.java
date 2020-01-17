@@ -1,4 +1,6 @@
 import java.util.Random;
+import java.awt.Image;
+import java.awt.Toolkit;
 class Enemy{
     //バトル関連
     EnumBattleStatus eStatus = EnumBattleStatus.Existence;
@@ -12,10 +14,11 @@ class Enemy{
 
     Random r;
     int select;
-
+    Image enemyImage;
     int damage;
 
     Enemy() {
+        enemyImage = Toolkit.getDefaultToolkit().getImage("Java/Images/enemy.png");
         name = "スライム";
         maxHitPoint = 10;
         hitPoint = 10;
@@ -73,5 +76,9 @@ class Enemy{
 
     int getSelect(){
         return select;
+    }
+
+    Image getImage(){
+        return enemyImage;
     }
 }

@@ -61,7 +61,7 @@ public class MyMain1 /*implements Runnable*/{
     
     //Characterの位置とか向き(ステータスとかも)
 	static Character character;
-	static Enemy enemy;
+	Enemy enemy;
 	int nextItemId;	//あいてむのiD
 
 	
@@ -156,6 +156,8 @@ public class MyMain1 /*implements Runnable*/{
 						encounter = random.nextInt(100);
 						if(encounter > 90){
 							selectedIndex = 0;
+							enemy = new Enemy();
+							draw.getEnemy(enemy);
 							status = Status.BATTLE;
 						}
 				}
@@ -310,14 +312,22 @@ public class MyMain1 /*implements Runnable*/{
 				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)){
 					status = Status.BATTLE_MESSAGE2;
 					character.turn(selectedIndex, enemy);
+					enemy.endOfTurn();
 				}
 				break;
 			case BATTLE_MESSAGE2:
 				draw.drawBattleBasic();
 				draw.drawBattleMessage2(selectedIndex);
 				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)){
-					status = Status.BATTLE_MESSAGE3;
-					enemy.turn(character);
+					if(enemy.eStatus == EnumBattleStatus.Died){
+						status = Status.BATTLE_PLAYER_WIN;
+					}
+					else{
+						status = Status.BATTLE_MESSAGE3;
+						enemy.turn(character);
+						character.endOfTurn();
+					}
+
 				}
 				break;
 			case BATTLE_MESSAGE3:
@@ -331,10 +341,36 @@ public class MyMain1 /*implements Runnable*/{
 				draw.drawBattleBasic();
 				draw.drawBattleMessage4(enemy.getSelect());
 				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)){
-					status = Status.BATTLE_COMMAND;
+					if(character.eStatus == EnumBattleStatus.Died){
+						status = Status.BATTLE_PLAYER_LOSE;
+					}
+					else{
+						status = Status.BATTLE_COMMAND;
+					}
+				}
+				break;
+
+			case BATTLE_PLAYER_WIN:
+				draw.drawBattleBasic();
+				draw.drawBattleWin();
+				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)){
+					status = Status.GAME;
+				}
+				break;
+			case BATTLE_PLAYER_LOSE:
+				draw.drawBattleBasic();
+				draw.drawBattleLose();
+				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)){
+					status = Status.GAME_OVER;
 				}
 				break;
 			case GAME_OVER:
+				draw.drawGameOver();
+				if(MyKeyboard1.isKeyPressed(KeyEvent.VK_SPACE)){
+					character = new Character();
+					enemy = new Enemy();
+					status = status.START;
+				}
 				break;
 			}
 
