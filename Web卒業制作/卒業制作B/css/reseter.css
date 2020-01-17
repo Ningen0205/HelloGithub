@@ -202,6 +202,12 @@ ol, ul { list-style-position: inside; }
 	margin: 30px;
 }
 
+#event_parade_shadow{
+	font-weight: 600;
+	font-size: 40px;
+	text-shadow: 3px 3px 5px black;
+}
+
 #event_dance{
 	background-color: #E2982F;
 	padding-top: 40px;
@@ -223,7 +229,58 @@ ol, ul { list-style-position: inside; }
 
 
 /*----------------------gourmet.html----------------------*/
+#gourmet_body{
+	font-size: 25px;
+	background-color :#000000;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
 
+#gourmet_wrapper{
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	background-image: url("../images/gourmet_bg02.jpg");
+	background-repeat: repeat;
+}
+
+#gourmet_background_bg{
+	height: 330px;
+	background-image: url("../images/gourmet_bg.png");
+	background-repeat: repeat-x;
+}
+#gourmet_image_banner{
+	margin: 60px 0;
+}
+
+#gourmet_color_blue{
+	color:#0000cd;
+	font-family:serif;
+	font-size: 30px;
+}
+
+#gourmet_ctategories{
+	position: center;
+}
+.gourmet_category{
+	font-size: 20px;
+	width: 130px;
+	height: 40px;
+	position: center;
+	background-color: #000;
+	margin:50px 3%;
+/*	margin-left:5%;
+	margin-right:5%;*/
+	color:white;
+	display: inline-block;
+}
+
+
+
+
+
+/*------------------------footer--------------------------*/
 .footer_link{
 	margin-top:10px;
 	margin-left:5%;
