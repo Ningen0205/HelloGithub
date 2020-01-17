@@ -14,6 +14,9 @@ public class Draw {
 	int squareIdImageBitYLayer1;//マップチップの描画する場所（縦）
 	int squareIdImageBitYLayer2;//マップチップの描画する場所（縦）
 
+	final int WINDOW_WIDTH;
+	final int WINDOW_HEIGHT;
+
 	Font font;
 	FontMetrics metrics;
 
@@ -21,6 +24,7 @@ public class Draw {
 	final int SQUARE_SUM = 15;	//縦横のマスのサイズ
 	
 	Character character;
+	Enemy enemy;
 	Image mapImage;
 	Image charImage;
 	Image itemBoxImage;
@@ -28,9 +32,12 @@ public class Draw {
 
 
 	
-	Draw(Graphics gra){
+	Draw(final Graphics gra){
+		WINDOW_WIDTH = MyFrame1.WINDOW_WIDTH;
+		WINDOW_HEIGHT = MyFrame1.WINDOW_HEIGHT;
 
 		character = MyMain1.character;
+		enemy = MyMain1.enemy;
 		charImage = Toolkit.getDefaultToolkit().getImage("Java/Images/pipo-xmaschara01.png");
 		itemBoxImage = Toolkit.getDefaultToolkit().getImage("java/Images/itemBox.png");
 		mapImage = Toolkit.getDefaultToolkit().getImage("Java/Images/WorldMap-A2.png");// マップのマップチップ
@@ -76,12 +83,12 @@ public class Draw {
 		}
 	}
 	
-	void drawChar(int positionX, int positionY) {
+	void drawChar(final int positionX, final int positionY) {
 		g.drawImage(charImage, character.getPositonX(),character.getPositionY(), character.getPositonX()+32,character.getPositionY()+32,
 								32, 32*character.getDirection(), 64, 32*character.getDirection() + 32, MyMain1.myFrame1);
 	}
 
-	void drawMenu(int selectedIndex){
+	void drawMenu(final int selectedIndex){
 		drawLayer();
 		drawChar(character.getPositionX(),character.getPositionY());
 		
@@ -100,7 +107,7 @@ public class Draw {
 		g.drawLine(20,(30+40*selectedIndex),130,(30+40*selectedIndex));	//選択している場所へ線の描画
 	}
 
-	void drawMenuItem(int selectedIndex){
+	void drawMenuItem(final int selectedIndex){
 		drawLayer();
 		drawChar(character.getPositionX(),character.getPositionY());
 		font = new Font("SansSerif", Font.PLAIN, 15);
@@ -109,11 +116,11 @@ public class Draw {
 		g.setColor(Color.WHITE);
 		g.drawRect(50,50,200,300);//外枠描画
 
-		ArrayList<Integer> itemsOwnedList = character.getItemsOwnedList();
-		int itemPositionX = 100;
+		final ArrayList<Integer> itemsOwnedList = character.getItemsOwnedList();
+		final int itemPositionX = 100;
 		int itemPositionY = 80; 
 		if(itemsOwnedList != null){
-			for (Integer value : itemsOwnedList) {
+			for (final Integer value : itemsOwnedList) {
 				g.drawString(ItemID.ITEM_NAME[value],itemPositionX,itemPositionY);
 				itemPositionY += 30;
 			}
@@ -132,7 +139,7 @@ public class Draw {
 		g.drawRect(50,50,200,300);//外枠描画
 	}
 
-	void drawTextBox(int itemId){
+	void drawTextBox(final int itemId){
 		font = new Font("SansSerif", Font.PLAIN, 25);
 		g.setColor(Color.BLACK);
 		metrics = g.getFontMetrics(font);
@@ -141,6 +148,79 @@ public class Draw {
 		g.setColor(Color.WHITE);
 		g.drawRect(0, 300, 479, 179);
 		g.drawString(ItemID.ITEM_NAME[itemId]+"をゲットした!", (MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth(ItemID.ITEM_NAME[itemId]+"をゲットした!") / 2), 400);
+
+	}
+
+	void drawBattleBasic(){
+		font = new Font("SansSerif", Font.PLAIN, 20);
+		metrics = g.getFontMetrics(font);
+		g.setFont(font);
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+		g.setColor(Color.WHITE);
+		g.drawRect(0, 300, 479, 179);
+		g.drawRect(0, 0, MyFrame1.STATUS_WIDTH, MyFrame1.STATUS_HEIGHT);
+		g.drawString(character.getName(),(MyFrame1.STATUS_WIDTH / 2) - (metrics.stringWidth(character.getName()) / 2), 30); // 一人目 キャラ名
+		g.drawString("HP:" + character.getHitpoint(),
+				(MyFrame1.STATUS_WIDTH / 2) - (metrics.stringWidth("HP:" + character.getHitpoint()) / 2), 60); // HP
+	}
+	void drawBattle(){
+		g.drawString(enemy.getName()+"が現れた！",(MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth(enemy.getName()+"が現れた！") / 2), 400);
+	}
+
+	void drawBattleCommand(int selectedIndex){		
+		font = new Font("SansSerif", Font.PLAIN, 20);
+		metrics = g.getFontMetrics(font);
+		g.setColor(Color.WHITE);
+		g.setFont(font);
+		g.drawString("攻撃",(MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth("攻撃")/2),360);
+		g.drawString("防御",(MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth("防御")/2),420);
+		//(MyFrame1.STATUS_WIDTH / 2) - (metrics.stringWidth("攻撃")/2)
+		g.drawLine((MyFrame1.WINDOW_WIDTH/2)-(metrics.stringWidth("攻撃")),(360+60*selectedIndex),(MyFrame1.WINDOW_WIDTH/2)+(metrics.stringWidth("攻撃")),(360+60*selectedIndex));	//選択している場所へ線の描画
+	}
+
+	void drawBattleMessage1(int selectedIndex){
+		font = new Font("SansSerif", Font.PLAIN, 30);
+		metrics = g.getFontMetrics(font);
+		g.setColor(Color.WHITE);
+		g.setFont(font);
+		if(selectedIndex == 0){
+			g.drawString(character.getName()+"の攻撃!",(MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth(character.getName()+"の攻撃!")/2),390);
+		}
+		else{
+	 		g.drawString(character.getName()+"は防御した!",(MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth(character.getName()+"は防御した!")/2),390);
+		}
+	}
+
+	void drawBattleMessage2(int selectedIndex){
+		if(selectedIndex == 0){
+			g.drawString(enemy.getName()+"に"+character.getDamage()+"のダメージ！",(MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth(enemy.getName()+"に"+character.getDamage()+"のダメージ！")/2),390);
+		}
+		else{
+	 		g.drawString(character.getName()+"は受けるダメージが減った！",(MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth(character.getName()+"は受けるダメージが減った！")/2),390);
+		}
+	}
+
+	void drawBattleMessage3(int selectedIndex){
+		font = new Font("SansSerif", Font.PLAIN, 30);
+		metrics = g.getFontMetrics(font);
+		g.setColor(Color.WHITE);
+		g.setFont(font);
+		if(selectedIndex == 0){
+			g.drawString(enemy.getName()+"の攻撃!",(MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth(enemy.getName()+"の攻撃!")/2),390);
+		}
+		else{
+	 		g.drawString(enemy.getName()+"は防御した!",(MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth(enemy.getName()+"は防御した!")/2),390);
+		}
+	}
+
+	void drawBattleMessage4(int selectedIndex){
+		if(selectedIndex == 0){
+			g.drawString(character.getName()+"に"+enemy.getDamage()+"のダメージ！",(MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth(character.getName()+"に"+enemy.getDamage()+"のダメージ！")/2),390);
+		}
+		else{
+	 		g.drawString(enemy.getName()+"は受けるダメージが減った！",(MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth(enemy.getName()+"は受けるダメージが減った！")/2),390);
+		}
 
 	}
 

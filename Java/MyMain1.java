@@ -59,8 +59,9 @@ public class MyMain1 /*implements Runnable*/{
 	Random random;
 	int encounter;
     
-    //Characterの位置とか向き
+    //Characterの位置とか向き(ステータスとかも)
 	static Character character;
+	static Enemy enemy;
 	int nextItemId;	//あいてむのiD
 
 	
@@ -72,6 +73,7 @@ public class MyMain1 /*implements Runnable*/{
 		encounter = 0;
 
 		character = new Character();
+		enemy = new Enemy();
 		myFrame1 = new MyFrame1();
 		WINDOW_WIDTH = MyFrame1.WINDOW_WIDTH;
 		WINDOW_HEIGHT = MyFrame1.WINDOW_HEIGHT;
@@ -153,6 +155,7 @@ public class MyMain1 /*implements Runnable*/{
 						MyKeyboard1.isKeyPressed(KeyEvent.VK_DOWN) || MyKeyboard1.isKeyPressed(KeyEvent.VK_UP)){
 						encounter = random.nextInt(100);
 						if(encounter > 90){
+							selectedIndex = 0;
 							status = Status.BATTLE;
 						}
 				}
@@ -278,21 +281,58 @@ public class MyMain1 /*implements Runnable*/{
 				System.exit(0);
 				break;
 			case BATTLE:
-				font = new Font("SansSerif", Font.PLAIN, 20);
-				metrics = g.getFontMetrics(font);
-				g.setFont(font);
-				g.setColor(Color.BLACK);
-				g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-				g.setColor(Color.WHITE);
-				g.drawRect(0, 300, 479, 179);
-				g.drawRect(0, 0, MyFrame1.STATUS_WIDTH, MyFrame1.STATUS_HEIGHT);
-				g.drawString("人間", 35, 30); // 一人目 キャラ名
-				g.drawString("HP:" + Player.hitPoint,
-						(MyFrame1.STATUS_WIDTH / 2) - (metrics.stringWidth("HP:" + Player.hitPoint) / 2), 60); // HP
-				g.drawString("MP:" + Player.hitPoint,
-						(MyFrame1.STATUS_WIDTH / 2) - (metrics.stringWidth("MP:" + Player.magicPoint) / 2), 90); // MP
+				draw.drawBattleBasic();
+				draw.drawBattle();
 				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER))
-					status = Status.GAME;
+					status = Status.BATTLE_COMMAND;
+				break;
+			case BATTLE_COMMAND:
+				draw.drawBattleBasic();
+				draw.drawBattleCommand(selectedIndex);
+				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_DOWN)) {
+					selectedIndex += 1;
+					selectedIndex %= 2;
+				}
+
+				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_UP)) {
+					selectedIndex -= 1;
+					if (selectedIndex < 0)
+						selectedIndex = 1;
+				}
+
+				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)){
+					status = Status.BATTLE_MESSAGE1;
+				}
+				break;
+			case BATTLE_MESSAGE1:
+				draw.drawBattleBasic();
+				draw.drawBattleMessage1(selectedIndex);
+				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)){
+					status = Status.BATTLE_MESSAGE2;
+					character.turn(selectedIndex, enemy);
+				}
+				break;
+			case BATTLE_MESSAGE2:
+				draw.drawBattleBasic();
+				draw.drawBattleMessage2(selectedIndex);
+				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)){
+					status = Status.BATTLE_MESSAGE3;
+					enemy.turn(character);
+				}
+				break;
+			case BATTLE_MESSAGE3:
+				draw.drawBattleBasic();
+				draw.drawBattleMessage3(enemy.getSelect());
+				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)){
+					status = Status.BATTLE_MESSAGE4;
+				}
+				break;
+			case BATTLE_MESSAGE4:
+				draw.drawBattleBasic();
+				draw.drawBattleMessage4(enemy.getSelect());
+				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)){
+					status = Status.BATTLE_COMMAND;
+				}
 				break;
 			case GAME_OVER:
 				break;
