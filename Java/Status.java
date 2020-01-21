@@ -6,6 +6,8 @@ public enum Status {
     GAME_ITEMGET,
     MENU,
     MENU_ITEM,
+    MENU_ITEM_USEITEM,
+    ITEM_USED,
     MENU_STATUS,
     MENU_SAVE,
     MENU_TERMINATION,
@@ -15,8 +17,8 @@ public enum Status {
     BATTLE_MESSAGE2,
     BATTLE_MESSAGE3,
     BATTLE_MESSAGE4,
-
     BATTLE_PLAYER_WIN,//プレイヤー勝利
     BATTLE_PLAYER_LOSE, //負け
+    PLAYER_LEVELUP,
     GAME_OVER
 }

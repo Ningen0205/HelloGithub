@@ -26,7 +26,7 @@ public class Character {
 	int damage;
 	
 	
-	private static ArrayList<Integer> itemsOwnedList = new ArrayList<Integer>();	//所持しているアイテムのアイテムIDを管理
+	private ArrayList<Integer> itemsOwnedList = new ArrayList<Integer>();	//所持しているアイテムのアイテムIDを管理
 
 	Character(){
 		eStatus = EnumBattleStatus.Existence;
@@ -71,16 +71,16 @@ public class Character {
 
 	void levelup(){
 		level += 1;
-		maxHitPoint += 10;
+		maxHitPoint += 5;
 		hitPoint = maxHitPoint;
 		attack += 3;
 		defense += 2;
 
 		Exp -= nextLevelupExp;
-		nextLevelupExp += 3;
-		if(Exp >= nextLevelupExp){
+		nextLevelupExp += (int)(3 * level *0.6);
+/*		if(Exp >= nextLevelupExp){
 			levelup();
-		}
+		}*/
 	}
 
 
@@ -90,6 +90,15 @@ public class Character {
 		if(hitPoint <= 0){
 			hitPoint = 0;
 			eStatus = EnumBattleStatus.Died;
+		}
+	}
+
+	boolean canLevelup(){
+		if(Exp >= nextLevelupExp){
+			return true;
+		}
+		else{
+			return false;
 		}
 	}
 
@@ -104,6 +113,72 @@ public class Character {
 	int getDamage(){
 		return damage;
 	}
+
+	void addEXP(Enemy enemy){
+		Exp += enemy.getEXP();
+		sumExp += enemy.getEXP();
+	}
+
+
+	void useItem(int itemID){
+		System.out.println(ItemID.ITEM_NAME[itemID]);
+		switch(itemID){
+			case 1:
+				if(hitPoint + 20 >= maxHitPoint){
+					hitPoint = maxHitPoint;
+				}
+				else{
+					hitPoint += 20;
+				}
+			break;
+			case 2:
+				maxHitPoint+= 3;
+			break;
+			case 3:
+				attack += 2;
+			break;
+			case 4:
+				defense += 2;
+			break;
+		}
+	}
+
+	int getLevel(){
+		return level;
+	}
+
+	int getMaxHitPoint(){
+		return maxHitPoint;
+	}
+
+	int getHitPoint(){
+		return hitPoint;
+	}
+
+	int getAttack(){
+		return attack;
+	}
+
+	int getDefense(){
+		return defense;
+	}
+
+	int getExp(){
+		return Exp;
+	}
+
+	int getNextLevelExp(){
+		return nextLevelupExp;
+	}
+
+	int getSumExp(){
+		return sumExp;
+	}
+
+	void setItemsOwnedList(ArrayList<Integer> itemlist){
+		itemsOwnedList = itemlist;
+	}
+
 
 
 

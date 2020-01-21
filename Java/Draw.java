@@ -126,10 +126,44 @@ public class Draw {
 			}
 		}
 
-		g.drawLine(100,(30+30*selectedIndex),150,(30+30*selectedIndex));	//選択している場所へ線の描画
+		g.drawLine(100,(80+30*selectedIndex),180,(80+30*selectedIndex));	//選択している場所へ線の描画
 	}
 
-	void drawMenuStatus(){
+	void drawUseItem(){
+		font = new Font("SansSerif", Font.PLAIN, 15);
+		g.setColor(Color.BLACK);
+		g.fillRect(200,200,80,50);//枠内描画
+		g.setColor(Color.WHITE);
+		g.drawRect(200,200,80,50);//外枠描画
+		g.drawString("使う",240-(metrics.stringWidth("使う")/2),225);
+	}
+
+	void drawItemUsed(int itemId){
+		font = new Font("SansSerif", Font.PLAIN, 25);
+		g.setColor(Color.BLACK);
+		metrics = g.getFontMetrics(font);
+		g.setFont(font);
+		g.fillRect(0, 300, 479, 179);
+		g.setColor(Color.WHITE);
+		g.drawRect(0, 300, 479, 179);
+		g.drawString(ItemID.ITEM_NAME[itemId]+"を使用した！", (MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth(ItemID.ITEM_NAME[itemId]+"を使用した!") / 2), 350);
+		switch(itemId){
+			case 1:
+				g.drawString("HPが20回復した！", (MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth("HPが20回復した！") / 2), 400);
+			break;
+			case 2:
+				g.drawString("最大HPが3増加した！", (MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth("最大HPが3増加した！") / 2), 400);
+			break;
+			case 3:
+				g.drawString("攻撃力が2増加した！", (MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth("攻撃力が2増加した！") / 2), 400);
+			break;
+			case 4:
+				g.drawString("防御力が2増加した！", (MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth("防御力が2増加した！") / 2), 400);
+			break;
+		}
+	}
+
+	void drawMenuStatus(Character c){
 		drawLayer();
 		drawChar(character.getPositionX(),character.getPositionY());
 		font = new Font("SansSerif", Font.PLAIN, 15);
@@ -137,6 +171,13 @@ public class Draw {
 		g.fillRect(50,50,200,300);//枠内描画
 		g.setColor(Color.WHITE);
 		g.drawRect(50,50,200,300);//外枠描画
+		g.drawString("レベル:          "+c.getLevel(),200 - metrics.stringWidth("レベル:          "+c.getLevel()),100);
+		g.drawString("最大HP:          "+c.getMaxHitPoint(),200 - metrics.stringWidth("最大HP:          "+c.getMaxHitPoint()), 120);
+		g.drawString("現在HP:          "+c.getHitPoint(),200 - metrics.stringWidth("現在HP:          "+c.getHitPoint()), 140);
+		g.drawString("攻撃力:          "+c.getAttack(),200 - metrics.stringWidth("攻撃力:          "+c.getAttack()), 160);
+		g.drawString("防御力:          "+c.getDefense(),200 - metrics.stringWidth("防御力:          "+c.getDefense()), 180);
+		g.drawString("合計経験値:          "+c.getSumExp(),200 - metrics.stringWidth("合計経験値:          "+c.getSumExp()), 320);
+
 	}
 
 	void drawTextBox(final int itemId){
@@ -253,6 +294,15 @@ public class Draw {
 		
 	}
 
+	void drawCharacterLevelUp(){
+		font = new Font("SansSerif", Font.PLAIN, 30);
+		metrics = g.getFontMetrics(font);
+		g.setColor(Color.WHITE);
+		g.setFont(font);
+		g.drawString(character.getName()+"はレベルアップした！",(MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth(character.getName()+"はレベルアップした！")/2),390);
+		g.drawString(character.getName()+"は"+character.getLevel()+"レベルになった！",(MyFrame1.WINDOW_WIDTH / 2) - (metrics.stringWidth(character.getName()+"は"+character.getLevel()+"レベルになった！")/2),430);
+	}
+
 	void drawGameOver(){
 		Font font = new Font("SansSerif", Font.PLAIN, 30);
 		g.setFont(font);
@@ -266,6 +316,11 @@ public class Draw {
 	}
 	void getEnemy(Enemy enemy){
 		this.enemy = enemy;
+	}
+
+	void reStart(Character c,Enemy e){
+		character = c;
+		enemy = e;
 	}
 
 }

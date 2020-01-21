@@ -11,6 +11,7 @@ class Enemy{
     private final int attack;
     private final int defense;
     private int turnDefense;// 防御した際の防御力
+    private final int EXP;
 
     Random r;
     int select;
@@ -24,6 +25,7 @@ class Enemy{
         hitPoint = 10;
         attack = 7;
         defense = 3;
+        EXP = 100;
         turnDefense = defense;
 
         r = new Random();
@@ -80,5 +82,9 @@ class Enemy{
 
     Image getImage(){
         return enemyImage;
+    }
+
+    int getEXP(){
+        return EXP;
     }
 }

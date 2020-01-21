@@ -7,6 +7,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 //import javax.swing.JTextField;
 import java.util.Random;
 
@@ -135,15 +137,23 @@ public class MyMain1 /*implements Runnable*/{
 			case GAME:
 				draw.drawLayer();
 				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)) {
-					nextItemId = Map.ITEMID_LAYER[Traffic.getNext(character.getDirection(),
-							character.getPositionX(), character.getPositionY())];
+					if(Traffic.getNext(character.getDirection(),character.getPositionX(), character.getPositionY()) < 0 ||
+						Traffic.getNext(character.getDirection(),character.getPositionX(), character.getPositionY()) > 224){
+							//処理なし
+						}
+					else{
+						nextItemId = Map.ITEMID_LAYER[Traffic.getNext(character.getDirection(),
+						character.getPositionX(), character.getPositionY())];
+						if (nextItemId != 0) {
+							character.additems(nextItemId);
+							Map.EmptyTreasureBox(Traffic.getNext(character.getDirection(),character.getPositionX(), character.getPositionY()));
+							status = Status.GAME_ITEMGET;
+						}
+					}
+
 //					System.out.println(nextItemId);
 
-					if (nextItemId != 0) {
-						character.additems(nextItemId);
-						Map.EmptyTreasureBox(Traffic.getNext(character.getDirection(),character.getPositionX(), character.getPositionY()));
-						status = Status.GAME_ITEMGET;
-					}
+
 				}
 				// SHIFTでメニュー表示
 				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_SHIFT)) {
@@ -209,8 +219,8 @@ public class MyMain1 /*implements Runnable*/{
 				break;
 			case GAME_ITEMGET:
 				draw.drawLayer();
-				draw.drawTextBox(nextItemId);
 				draw.drawChar(character.getPositionX(), character.getPositionY());
+				draw.drawTextBox(nextItemId);
 				if(MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)){
 					status = Status.GAME;
 				}
@@ -254,24 +264,66 @@ public class MyMain1 /*implements Runnable*/{
 
 			case MENU_ITEM:
 				draw.drawMenuItem(selectedIndex);
+				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)) {
+					if(character.getItemsOwnedList().size() == 0){
+						//処理なし
+					}
+					else{
+						status = Status.MENU_ITEM_USEITEM;
+					}
+				}
 
 				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_DOWN)) {
-					selectedIndex += 1;
-					selectedIndex %= 8;
+					if(character.getItemsOwnedList().size() == 0){
+						//処理なし
+					}
+					else{
+						selectedIndex += 1;
+						selectedIndex %= character.getItemsOwnedList().size();
+					}
+
 				}
 
 				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_UP)) {
 					selectedIndex -= 1;
-					if (selectedIndex < 0)
-						selectedIndex = 7;
+					if (selectedIndex < 0){
+						if(character.getItemsOwnedList().size() == 0){
+							selectedIndex = 0;
+						}
+						else{
+							selectedIndex = character.getItemsOwnedList().size() - 1;
+						}
+
+					}
+
 				}
 
 				if(MyKeyboard1.isKeyPressed(KeyEvent.VK_SHIFT)){
 					status = Status.MENU;
 				}
 				break;
+			case MENU_ITEM_USEITEM:
+				draw.drawMenuItem(selectedIndex);
+				draw.drawUseItem();
+				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_SHIFT)) {
+					status = Status.MENU_ITEM;
+				}
+				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)) {
+					status = Status.ITEM_USED;
+					character.useItem(character.getItemsOwnedList().get(selectedIndex));
+				}
+				break;
+			case ITEM_USED:
+				draw.drawLayer();
+				draw.drawChar(character.getPositionX(), character.getPositionY());
+				draw.drawItemUsed(character.getItemsOwnedList().get(selectedIndex));
+				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)) {
+					status = Status.GAME;
+					character.getItemsOwnedList().remove(selectedIndex);
+				}
+				break;
 			case MENU_STATUS:
-				draw.drawMenuStatus();
+				draw.drawMenuStatus(character);
 				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_SHIFT)) {
 					status = Status.MENU;
 				}
@@ -354,7 +406,31 @@ public class MyMain1 /*implements Runnable*/{
 				draw.drawBattleBasic();
 				draw.drawBattleWin();
 				if (MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)){
-					status = Status.GAME;
+					character.addEXP(enemy);
+					if(character.canLevelup()){
+						
+						java.awt.Toolkit.getDefaultToolkit().beep();
+						character.levelup();
+						status = Status.PLAYER_LEVELUP;
+					}
+					else{
+						status = Status.GAME;
+					}
+				}
+				break;
+			case PLAYER_LEVELUP:
+				draw.drawBattleBasic();
+				draw.drawCharacterLevelUp();
+				if(MyKeyboard1.isKeyPressed(KeyEvent.VK_ENTER)){
+					if(character.canLevelup()){
+						
+						java.awt.Toolkit.getDefaultToolkit().beep();
+						character.levelup();
+						status = Status.PLAYER_LEVELUP;
+					}
+					else{
+						status = Status.GAME;
+					}
 				}
 				break;
 			case BATTLE_PLAYER_LOSE:
@@ -367,9 +443,12 @@ public class MyMain1 /*implements Runnable*/{
 			case GAME_OVER:
 				draw.drawGameOver();
 				if(MyKeyboard1.isKeyPressed(KeyEvent.VK_SPACE)){
+					ArrayList<Integer> itemList = character.getItemsOwnedList();
 					character = new Character();
+					character.setItemsOwnedList(itemList);
 					enemy = new Enemy();
-					status = status.START;
+					draw.reStart(character, enemy);
+					status = Status.START;
 				}
 				break;
 			}
@@ -393,5 +472,6 @@ public class MyMain1 /*implements Runnable*/{
 
 		}
 	}
+
 
 }
